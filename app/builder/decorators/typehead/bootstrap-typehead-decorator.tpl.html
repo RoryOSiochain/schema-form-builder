@@ -1,0 +1,5 @@
+<div class="form-group">
+  <label class="control-label" ng-if="showTitle()">{{showTitle()}}</label>
+  <input class="form-control" type="text" ng-model="$$value$$"
+         uib-typeahead="item for item in form.options | filter:$viewValue | limitTo:8">
+</div>

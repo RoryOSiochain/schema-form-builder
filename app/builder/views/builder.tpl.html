@@ -1,0 +1,24 @@
+<h1>Schema Form Builder</h1>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4>{{ builder.model.name || 'New Form'}}</h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form name="builderForm" ng-submit="builder.save(builderForm)">
+                    <uib-alert type="info">Build your own form</uib-alert>
+                <div sf-schema="builder.schema" sf-form="builder.form" sf-model="builder.model" sf-options="{ formDefaults: { ngModelOptions: { updateOn: 'blur' } }}"></div>
+            </form>
+            </div>
+            <div class="col-md-6">
+
+
+                    <div sf-schema="builder.output.schema" sf-form="builder.output.form" sf-model="builder.output.model"></div>
+                <pre> {{ builder.output | json }}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>
