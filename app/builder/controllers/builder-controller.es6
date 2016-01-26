@@ -1,0 +1,345 @@
+(function () {
+    'use strict';
+
+    class BuilderCtrl {
+      constructor(Converter, locker, $scope) {
+        let vm = this;
+
+        vm.schema = {
+          type: 'object',
+          title: 'Comment',
+          properties: {
+            name: {
+              type: 'string'
+            },
+
+            fields: {
+              type: 'array',
+              title: 'Fields',
+              items: {
+                type: 'object',
+                properties: {
+                  type: {
+                    title: 'Type',
+                    type: 'string',
+                    enum: [
+                      'text',
+                      'textarea',
+                      'number',
+                      'email',
+                      'password',
+                      'dropdown',
+                      'radios',
+                      'radios-inline',
+                      'radiobuttons',
+                      'checkbox',
+                      'checkboxes',
+                      'boolean',
+                      'date',
+                      'time',
+                      'date-time',
+                      'button',
+                      'submit',
+                      'reset',
+                      'help',
+                      'template'
+                    ]
+                  },
+                  key: {
+                    title: 'Key',
+                    type: 'string',
+                    description: 'Unique identifier'
+                  },
+                  title: {
+                    condition: 'model.notitle',
+                    title: 'Title',
+                    type: 'string'
+                  },
+                  notitle: {
+                    type: 'boolean',
+                    title: 'Don\'t show title'
+                  },
+                  description: {
+                    title: 'Description',
+                    type: 'string'
+                  },
+                  validationMessage: {
+                    title: 'Validation Message',
+                    description: 'A custom validation error message. It can be a string, an object with error codes as key and messages as values or a custom message function',
+                    type: 'string'
+                  },
+                  onChange: {
+                    title: 'onChange',
+                    description: 'onChange event handler, expression or function. For expression, <code>modelValue</code> and <code>form</code> are both available. For a function, they will be passed as parameters in that order',
+                    type: 'string'
+                  },
+                  feedback: {
+                    title: 'Feedback Icon',
+                    description: 'Inline feedback icons. To turn off just set feedback to false. If set to a string that string is evaluated by a ngClass in the decorators scope. If not set att all the default value is <code>{ "glyphicon": true, "glyphicon-ok": hasSuccess(), "glyphicon-remove": hasError() }</code>',
+                    type: 'string'
+                  },
+                  disableSuccessState: {
+                    type: 'boolean',
+                    title: 'Disable Success State',
+                    default: false
+                  },
+                  disableErrorState: {
+                    type: 'boolean',
+                    title: 'Disable Error State',
+                    default: false
+                  },
+                  placeholder: {
+                    title: 'Placeholder',
+                    description: 'Placeholder on inputs and textarea',
+                    type: 'string'
+                  },
+                  ngModelOptions: {
+                    title: 'ng-Model Options',
+                    description: 'Passed along to ng-model-options',
+                    type: 'string'
+                  },
+                  readonly: {
+                    type: 'boolean',
+                    title: 'Readonly',
+                    default: false
+                  },
+                  htmlClass: {
+                    title: 'Class',
+                    description: 'CSS Class(es) to be added to the container div e.g. : \'street foobar\'',
+                    type: 'string'
+                  },
+                  destroyStrategy: {
+                    title: 'Destroy Strategy',
+                    description: 'One of <code>null</code>, <code>empty</code> , <code>remove</code>, or <code>retain</code>. Changes model on $destroy event. default is <code>remove</code>.',
+                    type: 'string'
+                  },
+                  copyValueTo: {
+                    title: 'Copy Value To',
+                    description: 'Copy values to these schema keys e.g [\'address.street\']. The receiving fields can be shown, but the intent for them is to be hidden.',
+                    type: 'string'
+                  },
+                  fieldHtmlClass: {
+                    title: 'Field Class',
+                    description: 'CSS Class(es) to be added to field input (or similar)',
+                    type: 'string'
+                  },
+                  labelHtmlClass: {
+                    title: 'Label Class',
+                    description: 'CSS Class(es) to be added to the label of the field (or similar)',
+                    type: 'string'
+                  },
+                  condition: {
+                    title: 'Condition',
+                    description: 'Show or hide field depending on an angular expression e.g \'model.age < 18\'. The expression has access to <code>model</code>, <code>modelValue</code>, <code> arrayIndex</code>.  The condition need not reference a model value it could be anything on scope.',
+                    type: 'string'
+                  },
+                  fieldAddonLeft: {
+                    title: 'Field Addon - Left',
+                    description: 'Add html code to left of input field. For reference check <a target=\'_blank\' href=\'http://getbootstrap.com/components/#input-groups\'>bootstrap input groups</a>.',
+                    type: 'string'
+                  },
+                  fieldAddonRight: {
+                    title: 'Field Addon - Right',
+                    description: 'Add html code to right of input field. For reference check <a target=\'_blank\' href=\'http://getbootstrap.com/components/#input-groups\'>bootstrap input groups</a>.',
+                    type: 'string'
+                  },
+                  onClick: {
+                    title: 'onClick',
+                    description: 'Function to call when a button/submit is clicked',
+                    type: 'string'
+                  },
+                  showAdvanced: {
+                    title: 'Show advance options',
+                    type: 'boolean'
+                  }
+                },
+                required: [
+                  'type',
+                  'key'
+                ]
+              }
+            }
+          },
+          required: ['name']
+        };
+        vm.model = locker.get('schema_form', {
+          fields: [
+            {
+              type: 'textbox',
+              key: 'first_name',
+              title: 'First name'
+            },
+            {
+              type: 'textbox',
+              key: 'last_name',
+              title: 'Last name'
+            },
+            {
+              type: 'email',
+              key: 'email',
+              title: 'Email'
+            },
+            {
+              type: 'date',
+              key: 'dob',
+              title: 'Date of Birth'
+            },
+            {
+              type: 'dropdown',
+              key: 'marital-status',
+              title: 'Marital Status'
+            },
+            {
+              type: 'date-time',
+              key: 'check-in',
+              title: 'Check In'
+            },
+            {
+              type: 'date-time',
+              key: 'check-out',
+              title: 'Check Out'
+            },
+            {
+              type: 'textarea',
+              key: 'bio',
+              title: 'Biography'
+            }
+          ]
+        });
+        vm.form = [
+          {
+            key: 'name'
+          },
+          {
+            type: 'help',
+            helpvalue: '<h4>Fields</h4><hr/>'
+          },
+          {
+            key: 'fields',
+            type: 'accordion-array',
+            title: '{{ value.title || "Field "+ $index}}',
+            add: 'Add Field',
+            remove: 'Remove Field',
+            startEmpty: true,
+            items: [
+              'fields[].type',
+              'fields[].key',
+              'fields[].title',
+              'fields[].notitle',
+              {
+                key: 'fields[].description',
+                type: 'textarea'
+              },
+              {
+                key: 'fields[].showAdvanced'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                type:'help',
+                helpvalue: '<hr/>'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].validationMessage',
+                type: 'textarea'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].onChange',
+                type: 'textarea'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].feedback'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].disableSuccessState'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].disableErrorState'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].placeholder'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].ngModelOptions',
+                type: 'textarea'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].readonly'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].htmlClass'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].destroyStrategy'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].copyValueTo'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].fieldHtmlClass'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].labelHtmlClass'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].condition'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                'key': 'fields[].fieldAddonLeft'
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                key: 'fields[].fieldAddonRight'
+              }
+
+            ]
+          },
+          {
+            type: 'submit',
+            style: 'btn-success',
+            title: 'Save'
+          }
+        ];
+        vm.output = {schema: {}, form: []};
+
+        vm.save = (form) => {
+          $scope.$broadcast('schemaFormValidate');
+          if (form.$valid) {
+            locker.put('schema_form', vm.model);
+            alert('Saved');
+          }
+        }
+
+        function generateOutput(update) {
+          vm.output = Converter.generateFields(update);
+        }
+
+        $scope.$watch(() => vm.model, function (update) {
+          generateOutput(update);
+        }, true);
+      }
+    }
+    /**
+     * @ngdoc object
+     * @name builder.controller:BuilderCtrl
+     *
+     * @description
+     *
+     */
+    angular.module('builder').controller('BuilderCtrl', BuilderCtrl);
+  }()
+);

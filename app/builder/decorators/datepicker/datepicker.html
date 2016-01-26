@@ -1,0 +1,27 @@
+<div class="form-group schema-form-{{form.type}} {{form.htmlClass}}"
+     ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }">
+  <label class="control-label {{form.labelHtmlClass}}" ng-class="{'sr-only': !showTitle()}"
+         for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
+
+  <p class="input-group">
+      <!--TODO:: removed schema-validate="form" consider having a custom validator-->
+      <input type="text"
+           id="{{form.key.slice(-1)[0]}}"
+           class="form-control"
+           sf-changed="form"
+           placeholder="{{form.placeholder}}"
+           uib-datepicker-popup="dd.MM.yyyy"
+           ng-model="$$value$$"
+           ng-model-options="form.ngModelOptions"
+           is-open="form.open"
+           min-date="form.minDate"
+           max-date="form.maxDate"
+           init-date="form.defaultDate"
+           close-text="Close"/>
+        <span class="input-group-btn">
+             <button type="button" class="btn btn-default" ng-click="form.open = !form.open"><i
+                 class="fa fa-calendar-o"></i></button>
+        </span>
+  </p>
+  <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}}</span>
+</div>

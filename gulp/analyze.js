@@ -11,12 +11,12 @@ module.exports = function (gulp, $, config) {
       config.unitTestFiles
     ])
       .pipe($.plumber({errorHandler: function (err) {
-        $.notify.onError({
-          title: 'Error linting at ' + err.plugin,
-          subtitle: ' ', //overrides defaults
-          message: err.message.replace(/\u001b\[.*?m/g, ''),
-          sound: ' ' //overrides defaults
-        })(err);
+        //$.notify.onError({
+        //  title: 'Error linting at ' + err.plugin,
+        //  subtitle: ' ', //overrides defaults
+        //  message: err.message.replace(/\u001b\[.*?m/g, ''),
+        //  sound: ' ' //overrides defaults
+        //})(err);
 
         this.emit('end');
       }}))

@@ -8,7 +8,7 @@
    */
   angular
     .module('schemaFormBuilder', [
-      'ui.router',
+      'builder',
       'ui.bootstrap'
     ]);
 }());

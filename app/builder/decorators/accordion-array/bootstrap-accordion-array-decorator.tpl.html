@@ -1,0 +1,24 @@
+<div sf-array="form" class="schema-form-array {{form.htmlClass}}" ng-model="$$value$$"
+     ng-model-options="form.ngModelOptions">
+    <uib-accordion ng-model="modelArray" ui-sortable="">
+        <uib-accordion-group ng-repeat="item in modelArray track by $index">
+            <uib-accordion-heading class="{{form.fieldHtmlClass}}">
+                {{interp(form.title,{'$index':$index, value: item}) || $index}}
+            </uib-accordion-heading>
+            <sf-decorator ng-init="arrayIndex = $index" form="copyWithIndex($index)"></sf-decorator>
+            <button ng-hide="form.readonly || form.remove === null" ng-click="deleteFromArray($index)" type="button"
+                    class="btn btn-danger pull-right">
+                <i class="fa fa-trash"></i></button>
+        </uib-accordion-group>
+    </uib-accordion>
+    <div class="clearfix" style="padding: 15px;">
+        <button ng-hide="form.readonly || form.add === null" ng-click="appendToArray()" type="button"
+                class="btn {{ form.style.add || 'btn-default' }} pull-right"><i class="glyphicon glyphicon-plus"></i> {{
+            form.add || 'Add'}}
+        </button>
+    </div>
+    <div class="help-block" ng-show="(hasError() && errorMessage(schemaError())) || form.description"
+         ng-bind-html="(hasError() && errorMessage(schemaError())) || form.description"></div>
+</div>
+
+
