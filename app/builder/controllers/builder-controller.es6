@@ -178,13 +178,13 @@
           type: 'schema-form',
           fields: [
             {
-              type: 'textbox',
+              type: 'text',
               key: 'first_name',
               title: 'First name',
               open: false
             },
             {
-              type: 'textbox',
+              type: 'text',
               key: 'last_name',
               title: 'Last name',
               open: false
