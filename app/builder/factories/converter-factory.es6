@@ -16,7 +16,7 @@
     let ConverterBase = {};
     ConverterBase.generateStandardAttributes = (field, output) => {
 
-      let form = {}, formProps = [
+      let form, formProps = [
         'key',
         'condition',
         'onChange',
@@ -47,7 +47,8 @@
       output.schema.properties[field.key] = {
         title: field.title,
         description: field.description
-      }
+      };
+
       form = _.pick(field, formProps);
       output.form.push(form);
       return output;
@@ -103,7 +104,6 @@
         type: field.type,
         title: field.title
       };
-      output.form.push(field.key);
       return output;
     };
 
