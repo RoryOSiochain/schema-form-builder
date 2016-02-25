@@ -13,7 +13,7 @@
 
     var typehead = function (name, schema, options) {
       var form;
-      if (schema.type === 'typehead' || schema.type['x-schema-form'] === 'typehead' || (!_.isUndefined(form) && form.type == 'typehead')) {
+      if (schema.type === 'typehead' || schema.type['x-schema-form'] === 'typehead' || (!_.isUndefined(form) && form.type === 'typehead')) {
         form = schemaFormProvider.stdFormObj(name, schema, options);
         options.lookup[sfPathProvider.stringify(options.path)] = form;
         return form;
