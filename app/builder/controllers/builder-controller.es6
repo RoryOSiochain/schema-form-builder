@@ -12,13 +12,24 @@
             name: {
               type: 'string'
             },
-
+            type: {
+              type: 'string',
+              title: 'Output Type',
+              enum: [
+                'schema-form',
+                'bootstrap'
+              ]
+            },
             fields: {
               type: 'array',
               title: 'Fields',
               items: {
                 type: 'object',
                 properties: {
+                  open:{
+                    type: 'boolean',
+                    default: true
+                  },
                   type: {
                     title: 'Type',
                     type: 'string',
@@ -163,53 +174,66 @@
           required: ['name']
         };
         vm.model = locker.get('schema_form', {
+          name: 'Sample Form',
+          type: 'schema-form',
           fields: [
             {
               type: 'textbox',
               key: 'first_name',
-              title: 'First name'
+              title: 'First name',
+              open: false
             },
             {
               type: 'textbox',
               key: 'last_name',
-              title: 'Last name'
+              title: 'Last name',
+              open: false
             },
             {
               type: 'email',
               key: 'email',
-              title: 'Email'
+              title: 'Email',
+              open: false
             },
             {
               type: 'date',
               key: 'dob',
-              title: 'Date of Birth'
+              title: 'Date of Birth',
+              open: false
             },
             {
               type: 'dropdown',
               key: 'marital-status',
-              title: 'Marital Status'
+              title: 'Marital Status',
+              open: false
             },
             {
               type: 'date-time',
               key: 'check-in',
-              title: 'Check In'
+              title: 'Check In',
+              open: false
             },
             {
               type: 'date-time',
               key: 'check-out',
-              title: 'Check Out'
+              title: 'Check Out',
+              open: false
             },
             {
               type: 'textarea',
               key: 'bio',
-              title: 'Biography'
+              title: 'Biography',
+              open: false
             }
           ]
         });
         vm.form = [
           {
             key: 'name'
+          }, {
+            key: 'type'
           },
+
           {
             type: 'help',
             helpvalue: '<h4>Fields</h4><hr/>'
@@ -227,6 +251,11 @@
               'fields[].title',
               'fields[].notitle',
               {
+                key:'fields[].open',
+                noTitle: true,
+                type: 'hidden'
+              },
+              {
                 key: 'fields[].description',
                 type: 'textarea'
               },
@@ -235,7 +264,7 @@
               },
               {
                 condition: 'model.fields[arrayIndex].showAdvanced',
-                type:'help',
+                type: 'help',
                 helpvalue: '<hr/>'
               },
               {
@@ -322,10 +351,16 @@
             locker.put('schema_form', vm.model);
             alert('Saved');
           }
-        }
+        };
+        vm.newForm = () => {
+          vm.model = {};
+          locker.put('schema_form', vm.model);
+          console.log(vm.model);
+        };
 
         function generateOutput(update) {
           vm.output = Converter.generateFields(update);
+          vm.display = angular.copy(vm.output);
         }
 
         $scope.$watch(() => vm.model, function (update) {

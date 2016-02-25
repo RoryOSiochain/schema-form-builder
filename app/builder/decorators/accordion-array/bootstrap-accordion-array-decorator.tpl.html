@@ -1,7 +1,7 @@
 <div sf-array="form" class="schema-form-array {{form.htmlClass}}" ng-model="$$value$$"
      ng-model-options="form.ngModelOptions">
     <uib-accordion ng-model="modelArray" ui-sortable="">
-        <uib-accordion-group ng-repeat="item in modelArray track by $index">
+        <uib-accordion-group ng-repeat="item in modelArray track by $index" is-open="item.open">
             <uib-accordion-heading class="{{form.fieldHtmlClass}}">
                 {{interp(form.title,{'$index':$index, value: item}) || $index}}
             </uib-accordion-heading>
@@ -12,7 +12,7 @@
         </uib-accordion-group>
     </uib-accordion>
     <div class="clearfix" style="padding: 15px;">
-        <button ng-hide="form.readonly || form.add === null" ng-click="appendToArray()" type="button"
+        <button ng-hide="form.readonly || form.add === null" ng-click="appendToArray();form.openLast()" type="button"
                 class="btn {{ form.style.add || 'btn-default' }} pull-right"><i class="glyphicon glyphicon-plus"></i> {{
             form.add || 'Add'}}
         </button>

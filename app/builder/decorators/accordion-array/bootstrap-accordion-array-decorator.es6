@@ -10,6 +10,19 @@
     .module('builder').config(bootstrapAccordionArrayDecorator);
 
   function bootstrapAccordionArrayDecorator(schemaFormProvider,  schemaFormDecoratorsProvider, sfPathProvider) {
+
+    //var accordion = function (name, schema, options) {
+    //    var f = schemaFormProvider.stdFormObj(name, schema, options);
+    //
+    //    f.openLast = function(){
+    //      alert('open');
+    //    };
+    //    options.lookup[sfPathProvider.stringify(options.path)] = f;
+    //    return f;
+    //};
+    //
+    //schemaFormProvider.defaults.array.unshift(accordion);
+
     schemaFormDecoratorsProvider.addMapping(
       'bootstrapDecorator',
       'accordion-array',
