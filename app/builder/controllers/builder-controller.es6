@@ -2,9 +2,66 @@
     'use strict';
 
     class BuilderCtrl {
-      constructor(Converter, locker, $scope) {
+      constructor(Converter, growl, locker, $scope, $uibModal) {
         let vm = this;
 
+        vm.forms = locker.get('schema_forms', {}/* {
+         'sample_form': {
+         name: 'Sample Form',
+         type: 'schema-form',
+         fields: [
+         {
+         type: 'text',
+         key: 'first_name',
+         title: 'First name',
+         open: false
+         },
+         {
+         type: 'text',
+         key: 'last_name',
+         title: 'Last name',
+         open: false
+         },
+         {
+         type: 'email',
+         key: 'email',
+         title: 'Email',
+         open: false
+         },
+         {
+         type: 'date',
+         key: 'dob',
+         title: 'Date of Birth',
+         open: false
+         },
+         {
+         type: 'dropdown',
+         key: 'marital-status',
+         title: 'Marital Status',
+         open: false
+         },
+         {
+         type: 'date-time',
+         key: 'check-in',
+         title: 'Check In',
+         open: false
+         },
+         {
+         type: 'date-time',
+         key: 'check-out',
+         title: 'Check Out',
+         open: false
+         },
+         {
+         type: 'textarea',
+         key: 'bio',
+         title: 'Biography',
+         open: false
+         }
+         ]
+         }
+         }*/);
+        console.log(vm.forms);
         vm.schema = {
           type: 'object',
           title: 'Comment',
@@ -26,7 +83,7 @@
               items: {
                 type: 'object',
                 properties: {
-                  open:{
+                  open: {
                     type: 'boolean',
                     default: true
                   },
@@ -173,67 +230,14 @@
           },
           required: ['name']
         };
-        vm.model = locker.get('schema_form', {
-          name: 'Sample Form',
-          type: 'schema-form',
-          fields: [
-            {
-              type: 'text',
-              key: 'first_name',
-              title: 'First name',
-              open: false
-            },
-            {
-              type: 'text',
-              key: 'last_name',
-              title: 'Last name',
-              open: false
-            },
-            {
-              type: 'email',
-              key: 'email',
-              title: 'Email',
-              open: false
-            },
-            {
-              type: 'date',
-              key: 'dob',
-              title: 'Date of Birth',
-              open: false
-            },
-            {
-              type: 'dropdown',
-              key: 'marital-status',
-              title: 'Marital Status',
-              open: false
-            },
-            {
-              type: 'date-time',
-              key: 'check-in',
-              title: 'Check In',
-              open: false
-            },
-            {
-              type: 'date-time',
-              key: 'check-out',
-              title: 'Check Out',
-              open: false
-            },
-            {
-              type: 'textarea',
-              key: 'bio',
-              title: 'Biography',
-              open: false
-            }
-          ]
-        });
+        vm.model = {};
         vm.form = [
           {
             key: 'name'
-          }, {
+          },
+          {
             key: 'type'
           },
-
           {
             type: 'help',
             helpvalue: '<h4>Fields</h4><hr/>'
@@ -270,7 +274,7 @@
               },
               'fields[].notitle',
               {
-                key:'fields[].open',
+                key: 'fields[].open',
                 noTitle: true,
                 type: 'hidden'
               },
@@ -364,28 +368,79 @@
         ];
         vm.output = {schema: {}, form: []};
 
-        vm.save = (form) => {
+        vm.saveForm = (form) => {
           $scope.$broadcast('schemaFormValidate');
           if (form.$valid) {
-            locker.put('schema_form', vm.model);
-            alert('Saved');
+            persistForm();
           }
         };
         vm.newForm = () => {
-          vm.model = {};
-          locker.put('schema_form', vm.model);
+          persistForm();
+          vm.model = {
+            fields: []
+          };
           console.log(vm.model);
         };
+        vm.openForm = () => {
+          var modalInstance = $uibModal.open({
+            templateUrl: 'builder/views/open.tpl.html',
+            controller: function ($uibModalInstance, forms) {
+              let vm = this;
+              vm.forms = forms;
+              vm.open = function (form) {
+                $uibModalInstance.close(form);
+              };
+
+              vm.delete = function (index, form) {
+                if (confirm('About to delete ' + form.name)) {
+                  vm.forms.slice(vm.forms, index, 1);
+                  locker.put('schema_forms', vm.forms);
+                }
+              };
+
+              vm.cancel = function () {
+                $uibModalInstance.dismiss();
+              }
+            },
+            controllerAs: 'modal',
+            resolve: {
+              forms: function () {
+                return vm.forms;
+              }
+            }
+          });
+
+          modalInstance.result.then(function (form) {
+            persistForm();
+            vm.model = form;
+            generateOutput(vm.model);
+          });
+        };
+
+        if (!vm.model.name) {
+          vm.openForm();
+        }
 
         function generateOutput(update) {
           vm.output = Converter.generateFields(update);
+          console.log(vm.output);
           vm.display = angular.copy(vm.output);
         }
+
+        function persistForm() {
+          if (vm.model.name && vm.model.name.length > 0) {
+            vm.forms[_.snakeCase(vm.model.name)] = vm.model;
+            locker.put('schema_forms', vm.forms);
+            growl.success('Form ' + vm.model.name + ' Saved');
+          }
+        }
+
 
         $scope.$watch(() => vm.model, function (update) {
           generateOutput(update);
         }, true);
       }
+
     }
     /**
      * @ngdoc object
