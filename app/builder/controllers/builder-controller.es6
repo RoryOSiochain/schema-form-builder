@@ -246,9 +246,28 @@
             remove: 'Remove Field',
             startEmpty: true,
             items: [
-              'fields[].type',
-              'fields[].key',
               'fields[].title',
+              {
+                type: 'section',
+                htmlClass: 'row',
+                items: [
+                  {
+                    type: 'section',
+                    htmlClass: 'col-sm-6',
+                    items: [
+                      'fields[].type',
+
+                    ]
+                  },
+                  {
+                    type: 'section',
+                    htmlClass: 'col-sm-6',
+                    items: [
+                      'fields[].key',
+                    ]
+                  }
+                ]
+              },
               'fields[].notitle',
               {
                 key:'fields[].open',
