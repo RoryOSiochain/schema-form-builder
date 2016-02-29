@@ -1,0 +1,16 @@
+
+<div class="modal-body">
+    <table class="table table-striped">
+        <tr ng-repeat="form in modal.forms">
+            <td>{{ form.name}}</td>
+            <td>
+                <button class="btn btn-success" ng-click="modal.open(form)">Open</button>
+                <button class="btn btn-danger" ng-click="modal.delete($index, form)">Delete</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="modal.open({fields: []})">New Form</button>
+    <button class="btn btn-warning" type="button" ng-click="modal.cancel()">Cancel</button>
+</div>

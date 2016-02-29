@@ -3,7 +3,8 @@
     <div class="panel-heading">
         <h4>
             {{ builder.model.name || 'Untitled Form'}}
-            <a class="btn btn-success pull-right" ng-click="builder.newForm()">New Form</a>
+            <a class="btn btn-success pull-right" ng-click="builder.newForm()">New</a>
+            <a class="btn btn-success pull-right" ng-click="builder.openForm()">Open</a>
         </h4>
     </div>
     <div class="panel-body">
@@ -11,7 +12,7 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <form name="builderForm" ng-submit="builder.save(builderForm)">
+                <form name="builderForm" ng-submit="builder.saveForm(builderForm)">
                     <div sf-schema="builder.schema" sf-form="builder.form" sf-model="builder.model"
                          sf-options="{ formDefaults: { ngModelOptions: { updateOn: 'blur' } }}"></div>
                 </form>

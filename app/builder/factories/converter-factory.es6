@@ -109,11 +109,13 @@
 
     ConverterBase.generateFields = (model) => {
       let output = {schema: {type: 'object', properties: {}}, form: []};
-      model.fields.forEach((field) => {
-          if (!_.isUndefined(field.type) && !_.isUndefined(field.key))
-            output = buildSegment(field, output)
-        }
-      );
+      if (_.isArray(model.fields)) {
+        model.fields.forEach((field) => {
+            if (!_.isUndefined(field.type) && !_.isUndefined(field.key))
+              output = buildSegment(field, output)
+          }
+        );
+      }
       return output;
     };
     return ConverterBase;
