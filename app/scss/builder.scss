@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
 body{
   font-family: 'Open Sans', sans-serif;
+  color:#989898;
   h1, h2, h3, h4{
     font-weight:300;
   }
@@ -12,6 +13,12 @@ body{
     background:#000;
     h4{
       color:#fff;
+      img{
+        width: 80px;
+        margin-top: -20px;
+        margin-bottom: -10px;
+        margin-right: 20px;
+      }
     }
   }
   .container{
@@ -24,42 +31,187 @@ body{
     .builder{
       height:calc(100vh - 80px);
       border-right:1px solid #ccc;
-      .helpvalue{
+      overflow-y:auto;
+      .my-field{
         border-bottom:0;
         border-top:1px solid #ccc;
-        padding-top:20px
-      }
-      .field-name{
-        border:0;
-        border-bottom:1px solid #2ECEE9;
-        color:#2ECEE9;
-      }
-      .output-type{
-        border:0;
-        border-bottom:1px solid #2ECEE9;
-        label{
-          color:#2ECEE9;
+        padding-top:20px;
+        padding-bottom:20px;
+        .form-group{
+          margin-top:0;
+          margin-bottom:0;
+        }
+        h4{
+          margin:0;
         }
       }
+      .main-info{
+        margin-top:20px;
+        .field-name{
+          border:0;
+          border-bottom:2px solid #2ECEE9;
+          color:#2ECEE9;
+          box-shadow:none;
+          border-radius: 0 !important;
+          padding-left:0;
+        }
+        .output-type-label{
+          color:#2ECEE9;
+          font-weight:300;
+          width:40%;
+          float:left;
+          text-align: right;
+          margin-top: 7px;
+        }
+        .output-type-label:after{
+          content: ' :';
+        }
+        .output-type{
+          border:0;
+          border-bottom:2px solid #2ECEE9;
+          box-shadow:none;
+          border-radius: 0 !important;
+          width:60%;
+        }
+      }
+
       .btn-default{
         width:100%;
         border:1px #979797 dashed;
         text-transform: uppercase;
         color:#979797;
       }
+      .panel-default{
+        border:0 !important;
+        border-radius:5px;
+        .panel-heading {
+          background-color: #85E5F5;
+          border:0;
+          border-radius:5px;
+          h4{
+            color: #fff;
+            font-weight:400;
+            font-size:1em;
+            text-transform:capitalize;
+            a{
+              color: #fff;
+              span{
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+      .panel-default.panel-open{
+        border:1px solid #FF8500 !important;
+        border-radius:5px;
+        .panel-heading{
+          background-color: #FF8500;
+          border-radius:5px 5px 0 0;
+        }
+      }
     }
     .preview{
       background: #eee;
       height:calc(100vh - 80px);
+      overflow-y:auto;
+      input, textarea{
+        background:none;
+      }
     }
   }
   .instructions{
     display:none;
+    width:100%;
+    height:calc(100vh - 80px);
+    background:#eee;
+    position: absolute;
+    top:80px;
+    left:0;
+    overflow-y:auto;
+    z-index:2;
+  }
+  .instructions.visible{
+    display: block;
   }
 }
 
+.hide-label{
+  label{
+    display:none;
+  }
+  .form-control-feedback{
+    top:0px;
+  }
+}
+.has-success{
+  .form-control-feedback {
+    color: #00E77D !important;
+  }
+  .form-control{
+    border-color:#00E77D !important;
+  }
+}
+.builder{
+  .row{
+    .col-sm-6{
+      .form-control-feedback{
+        right:15px;
+      }
+    }
+  }
+}
+
+.modal-content{
+  overflow:hidden;
+  .modal-body{
+    .table{
+      tr{
+        td{
+          border-top:0 !important;
+        }
+      }
+    }
+  }
+  .modal-footer{
+    background: #000;
+  }
+}
 
 //helpers
 .margin-right-20{
   margin-right:20px;
+}
+strong{
+  font-weight:600;
+}
+.btn{
+  border:0;
+}
+.grey{
+  color:#555;
+}
+.hidden{
+  display: none;
+}
+.bottom-spaced{
+  margin-bottom:15px;
+}
+.btn-success{
+  background-color: #00E77D;
+  border:0;
+}
+.separated{
+  width:100%;
+  clear:both;
+  height:50px;
+}
+
+select {
+  background:url(../../images/down.png) no-repeat 97% !important;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance:none;
+  -moz-appearance:none;
 }

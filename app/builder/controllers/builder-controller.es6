@@ -116,7 +116,7 @@
                   key: {
                     title: 'Key',
                     type: 'string',
-                    description: 'Unique identifier'
+                    //description: 'Unique identifier'
                   },
                   title: {
                     condition: 'model.notitle',
@@ -233,60 +233,158 @@
         vm.model = {};
         vm.form = [
           {
-            key: 'name',
-            htmlClass: 'btn btn-primary',
-            fieldHtmlClass: 'btn btn-success',
-            labelHtmlClass: 'btn btn-warning'
+            type: 'section',
+            htmlClass: 'row main-info',
+            items: [
+              {
+                key: 'name',
+                htmlClass: 'col-sm-6',
+                placeholder: 'name of the form',
+                notitle: true,
+                fieldHtmlClass: 'field-name',
+                labelHtmlClass: 'field-name-label'
+              },
+              {
+                key: 'type',
+                htmlClass: 'col-sm-6',
+                //notitle: true,
+                fieldHtmlClass: 'output-type',
+                labelHtmlClass: 'output-type-label'
+              },
+            ]
           },
           {
-            key: 'type'
-          },
-          {
-            type: 'help',
-            helpvalue: '<h4>My Fields</h4><hr/>'
+            type: 'section',
+            htmlClass: 'my-field row',
+            items: [
+              {
+                type: 'section',
+                htmlClass: 'col-sm-6',
+                items: [
+                  {
+                    type: 'help',
+                    helpvalue: '<h4>My Fields:</h4>'
+                  }
+                ]
+              },
+              {
+                type: 'section',
+                htmlClass: 'col-sm-6',
+                items: [
+                  {
+                    type: 'button',
+                    onClick: function () {
+                      vm.instructionsVisible = true;
+                    },
+                    style: 'btn-success btn-sm pull-right',
+                    title: 'Generate Schema'
+                  },
+                  {
+                    type: 'submit',
+                    style: 'btn-success btn-sm pull-right margin-right-20',
+                    title: 'Save'
+                  }
+                ]
+              }
+            ]
           },
           {
             key: 'fields',
             type: 'accordion-array',
             title: '{{ value.title || "Field "+ $index}}',
-            add: 'Add Field',
+            add: 'Add a new Field',
             remove: 'Remove Field',
             startEmpty: true,
             items: [
-              'fields[].title',
+              {
+                key: 'fields[].title',
+                htmlClass: 'hide-label',
+                placeholder: 'Title'
+              },
+              {
+                type: 'section',
+                htmlClass: 'row',
+                items: [
+                  {
+                    key: 'fields[].type',
+                    placeholder: 'Type',
+                    notitle: true,
+                    htmlClass: 'col-sm-6 hide-label',
+                  },
+                  {
+                    key: 'fields[].key',
+                    //type: 'section',
+                    placeholder: 'Key (Unique Identifier)',
+                    notitle: true,
+                    htmlClass: 'col-sm-6 hide-label',
+                  }
+                ]
+              },
+              {
+                key: 'fields[].open',
+                notitle: true,
+                type: 'hidden'
+              },
+              {
+                key: 'fields[].description',
+                type: 'textarea',
+                placeholder: 'Description',
+                notitle: true,
+              },
+              {
+                type: 'section',
+                htmlClass: 'row',
+                items: [
+                  {
+                    key: 'fields[].notitle',
+                    htmlClass: 'col-sm-6'
+                  },
+                  {
+                    key: 'fields[].showAdvanced',
+                    htmlClass: 'col-sm-6'
+                  },
+                ]
+              },
+              {
+                condition: 'model.fields[arrayIndex].showAdvanced',
+                type: 'help',
+                helpvalue: '<hr/>'
+              },
               {
                 type: 'section',
                 htmlClass: 'row',
                 items: [
                   {
                     type: 'section',
-                    htmlClass: 'col-sm-6',
+                    htmlClass: 'col-md-4',
                     items: [
-                      'fields[].type',
-
+                      {
+                        condition: 'model.fields[arrayIndex].showAdvanced',
+                        key: 'fields[].disableSuccessState'
+                      }
                     ]
                   },
                   {
                     type: 'section',
-                    htmlClass: 'col-sm-6',
+                    htmlClass: 'col-md-4',
                     items: [
-                      'fields[].key',
+                      {
+                        condition: 'model.fields[arrayIndex].showAdvanced',
+                        key: 'fields[].disableErrorState'
+                      }
+                    ]
+                  },
+                  {
+                    type: 'section',
+                    htmlClass: 'col-md-4',
+                    items: [
+                      {
+                        condition: 'model.fields[arrayIndex].showAdvanced',
+                        key: 'fields[].readonly'
+                      },
                     ]
                   }
                 ]
-              },
-              'fields[].notitle',
-              {
-                key: 'fields[].open',
-                noTitle: true,
-                type: 'hidden'
-              },
-              {
-                key: 'fields[].description',
-                type: 'textarea'
-              },
-              {
-                key: 'fields[].showAdvanced'
               },
               {
                 condition: 'model.fields[arrayIndex].showAdvanced',
@@ -309,24 +407,12 @@
               },
               {
                 condition: 'model.fields[arrayIndex].showAdvanced',
-                key: 'fields[].disableSuccessState'
-              },
-              {
-                condition: 'model.fields[arrayIndex].showAdvanced',
-                key: 'fields[].disableErrorState'
-              },
-              {
-                condition: 'model.fields[arrayIndex].showAdvanced',
                 key: 'fields[].placeholder'
               },
               {
                 condition: 'model.fields[arrayIndex].showAdvanced',
                 key: 'fields[].ngModelOptions',
                 type: 'textarea'
-              },
-              {
-                condition: 'model.fields[arrayIndex].showAdvanced',
-                key: 'fields[].readonly'
               },
               {
                 condition: 'model.fields[arrayIndex].showAdvanced',
@@ -362,11 +448,6 @@
               }
 
             ]
-          },
-          {
-            type: 'submit',
-            style: 'btn-success btn-sm',
-            title: 'Save'
           }
         ];
         vm.output = {schema: {}, form: []};

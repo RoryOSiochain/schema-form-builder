@@ -2,7 +2,8 @@
 <div class="body-section">
     <div class="header">
         <h4>
-            {{ builder.model.name || 'Untitled Form'}}
+            <img src="images/logo.png" alt="">
+            Schema Form <strong>Builder</strong> <span class="grey">/ {{ builder.model.name || 'Untitled Form'}}</span>
             <a class="btn btn-sm btn-primary pull-right" ng-click="builder.newForm()">New Form</a>
             <a class="btn btn-sm btn-warning pull-right margin-right-20" ng-click="builder.openForm()">My previous Forms</a>
         </h4>
@@ -18,37 +19,46 @@
                 </form>
             </div>
             <div class="col-sm-6 preview">
+                <h4>preview</h4>
                 <div sf-schema="builder.display.schema" sf-form="builder.display.form"
                      sf-model="builder.display.model"></div>
             </div>
         </div>
-        <div class="row instructions">
-            <div class="col-md-12">
+        <div class="instructions col-xs-12" ng-class="{'visible' : builder.instructionsVisible}">
+            <div class="">
                 <div ng-if="builder.model.type == 'schema-form'">
-                    <h2>Instructions</h2>
+                    <h2>Instructions <button class="btn btn-sm btn-primary pull-right"
+                    ng-click="builder.instructionsVisible = false">back</button> </h2>
                     <p>In your angular project do the following</p>
-                    <h4>1. Install angular-schema form</h4>
+                    <h4>First, Install angular-schema form</h4>
                     <p>Using bower:</p>
-                    <code>bower install angular-schema-form</code>
+                    <pre>bower install angular-schema-form</pre>
                     <p>Using npm:</p>
-                    <code>npm install angular-schema-form</code></p>
+                    <pre>npm install angular-schema-form</pre></p>
                     <p>Then add it as a dependency to your module</p>
-                    <code>angular.module('myModule', ['schemaForm'])</code>
-
-                    <h4>Specify your schema and form</h4>
+                    <pre>angular.module('myModule', ['schemaForm'])</pre>
+                    <div class="separated"></div>
+                    <h4>Secondly, Specify your schema and form</h4>
                     <p>In your controller, add the following schema and form an pass it to your views</p>
-                    <h5>Schema</h5>
-                    <pre> {{ builder.output.schema | json }}</pre>
-                    <h5>Forms</h5>
-                    <pre> {{ builder.output.form | json }}</pre>
-                    <h4>Display the form in your view</h4>
-                    <code class="language-html" data-lang="html">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5>Schema</h5>
+                            <pre> {{ builder.output.schema | json }}</pre>
+                        </div>
+                        <div class="col-sm-6">
+                            <h5>Forms</h5>
+                            <pre> {{ builder.output.form | json }}</pre>
+                        </div>
+                    </div>
+                    <div class="separated"></div>
+                    <h4>Lastly, Display the form in your view</h4>
+                    <pre class="language-html" data-lang="html">
                         &lt;form name="myForm" ng-submit="submit()"&gt; <br>
                         &lt;div sf-schema="schema" sf-form="form" sf-model="model"&gt;&lt;/div&gt;<br>
                         &lt;input type="submit" value="Submit"&gt;<br>
                             &lt;button type="button" ng-click="goBack()"&gt;Cancel&lt;/button&gt;<br>
                         &lt;/form&gt;
-                    </code>
+                    </pre>
                 </div>
                 <div ng-if="builder.model.type == 'bootstrap'">
                     <h3>To be created</h3>
