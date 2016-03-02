@@ -8,12 +8,14 @@
             <sf-decorator ng-init="arrayIndex = $index" form="copyWithIndex($index)"></sf-decorator>
             <button ng-hide="form.readonly || form.remove === null" ng-click="deleteFromArray($index)" type="button"
                     class="btn btn-danger pull-right">
-                <i class="fa fa-trash"></i></button>
+                Delete
+                <i class="fa fa-trash"></i>
+            </button>
         </uib-accordion-group>
     </uib-accordion>
-    <div class="clearfix" style="padding: 15px;">
+    <div class="clearfix bottom-spaced">
         <button ng-hide="form.readonly || form.add === null" ng-click="appendToArray();form.openLast()" type="button"
-                class="btn {{ form.style.add || 'btn-default' }} pull-right"><i class="glyphicon glyphicon-plus"></i> {{
+                class="btn {{ form.style.add || 'btn-default' }} pull-right">{{
             form.add || 'Add'}}
         </button>
     </div>
