@@ -1,23 +1,23 @@
-<h1>Schema Form Builder</h1>
-<div class="panel panel-primary">
-    <div class="panel-heading">
+
+<div class="body-section">
+    <div class="header">
         <h4>
             {{ builder.model.name || 'Untitled Form'}}
-            <a class="btn btn-success pull-right" ng-click="builder.newForm()">New</a>
-            <a class="btn btn-success pull-right" ng-click="builder.openForm()">Open</a>
+            <a class="btn btn-sm btn-primary pull-right" ng-click="builder.newForm()">New Form</a>
+            <a class="btn btn-sm btn-warning pull-right margin-right-20" ng-click="builder.openForm()">My previous Forms</a>
         </h4>
     </div>
-    <div class="panel-body">
-        <uib-alert type="default">Build your own form</uib-alert>
+    <div class="container">
+        <!--<uib-alert type="default">Build your own form</uib-alert>-->
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 builder">
                 <form name="builderForm" ng-submit="builder.saveForm(builderForm)">
                     <div sf-schema="builder.schema" sf-form="builder.form" sf-model="builder.model"
                          sf-options="{ formDefaults: { ngModelOptions: { updateOn: 'blur' } }}"></div>
                 </form>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 preview">
                 <div sf-schema="builder.display.schema" sf-form="builder.display.form"
                      sf-model="builder.display.model"></div>
             </div>
@@ -57,7 +57,5 @@
 
             </div>
         </div>
-    </div>
-    <div class="panel-footer">
     </div>
 </div>

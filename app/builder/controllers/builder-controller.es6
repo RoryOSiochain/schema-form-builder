@@ -71,10 +71,10 @@
             },
             type: {
               type: 'string',
-              title: 'Output Type',
+              title: 'Form Output',
               enum: [
                 'schema-form',
-                'bootstrap'
+                'bootstrap',
               ]
             },
             fields: {
@@ -240,7 +240,7 @@
           },
           {
             type: 'help',
-            helpvalue: '<h4>Fields</h4><hr/>'
+            helpvalue: '<h4>My Fields</h4><hr/>'
           },
           {
             key: 'fields',
@@ -362,7 +362,7 @@
           },
           {
             type: 'submit',
-            style: 'btn-success',
+            style: 'btn-success btn-sm',
             title: 'Save'
           }
         ];

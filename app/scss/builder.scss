@@ -1,0 +1,62 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+body{
+  font-family: 'Open Sans', sans-serif;
+  h1, h2, h3, h4{
+    font-weight:300;
+  }
+}
+.body-section{
+  .header{
+    width:100%;
+    padding:20px 15px;
+    background:#000;
+    h4{
+      color:#fff;
+    }
+  }
+  .container{
+    width:100%;
+    h1, h2, h3, h4{
+      color:#000;
+      font-weight:600;
+      text-transform: uppercase;
+    }
+    .builder{
+      height:calc(100vh - 80px);
+      border-right:1px solid #ccc;
+      .helpvalue{
+        border-bottom:0;
+        border-top:1px solid #ccc;
+        padding-top:20px
+      }
+      .field-name{
+        border:0;
+        border-bottom:1px solid #2ECEE9;
+        color:#2ECEE9;
+      }
+      .output-type{
+        border:0;
+        border-bottom:1px solid #2ECEE9;
+        label{
+          color:#2ECEE9;
+        }
+      }
+      .btn-default{
+        width:100%;
+        border:1px #979797 dashed;
+        text-transform: uppercase;
+        color:#979797;
+      }
+    }
+    .preview{
+      background: #eee;
+      height:calc(100vh - 80px);
+    }
+  }
+}
+
+
+//helpers
+.margin-right-20{
+  margin-right:20px;
+}
