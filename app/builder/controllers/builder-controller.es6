@@ -233,7 +233,10 @@
         vm.model = {};
         vm.form = [
           {
-            key: 'name'
+            key: 'name',
+            htmlClass: 'btn btn-primary',
+            fieldHtmlClass: 'btn btn-success',
+            labelHtmlClass: 'btn btn-warning'
           },
           {
             key: 'type'
